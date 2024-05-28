@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            box-sizing: border-box;
+        }
+        .results {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .result-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recherche Google Sheets</h1>
+        <input type="text" id="searchInput" placeholder="Rechercher...">
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var query = this.value;
+            fetch('https://script.google.com/macros/s/AKfycbxHkYEPows9fIWvqqqgNE2sMCDGDq3C9eQdURtdwsn9JYxoKg9gUqK6uz3HixNjuisR/exec?q=' + query) // Remplacez VOTRE_URL_APPS_SCRIPT par l'URL de votre script Apps Script
+                .then(response => response.json())
+                .then(data => {
+                    var resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    data.forEach(row => {
+                        var item = document.createElement('div');
+                        item.className = 'result-item';
+                        item.textContent = row.join(' - '); // Formatez les résultats comme vous le souhaitez
+                        resultsDiv.appendChild(item);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
